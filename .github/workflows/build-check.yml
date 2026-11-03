@@ -1,0 +1,30 @@
+name: Configure and build
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/*.yml"
+      - "**.cpp"
+      - "**.c"
+      - "**CMakeLists.txt"
+      - "**.h"
+      - "**.hpp"
+
+jobs:
+  build:
+    name: Build (linux)
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure project
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build project
+        run: cmake --build build --config Release -j$(nproc)
+
+      - name: Run tests
+        run: ctest --test-dir build --build-config Release --output-on-failure
