@@ -1,0 +1,12 @@
+add_subdirectory(SnapshotTestFramework)
+
+add_subdirectory(BaseTriangle)
+add_subdirectory(DepthTest)
+add_subdirectory(TexturedTriangle)
+add_subdirectory(TexSubImage2D)
+add_subdirectory(MultiTexturing)
+add_subdirectory(BufferSubDataTest)
+add_subdirectory(UniformsTest)
+add_subdirectory(DrawElementsTest)
+add_subdirectory(TexturedCube)
+add_subdirectory(SkyCube)
