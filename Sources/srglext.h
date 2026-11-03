@@ -1,0 +1,278 @@
+// 1.5
+#define srGL_BUFFER_SIZE                    0x8764
+#define srGL_BUFFER_USAGE                   0x8765
+#define srGL_QUERY_COUNTER_BITS             0x8864
+#define srGL_CURRENT_QUERY                  0x8865
+#define srGL_QUERY_RESULT                   0x8866
+#define srGL_QUERY_RESULT_AVAILABLE         0x8867
+#define srGL_ARRAY_BUFFER                   0x8892
+#define srGL_ELEMENT_ARRAY_BUFFER           0x8893
+#define srGL_ARRAY_BUFFER_BINDING           0x8894
+#define srGL_ELEMENT_ARRAY_BUFFER_BINDING   0x8895
+#define srGL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING 0x889F
+#define srGL_READ_ONLY                      0x88B8
+#define srGL_WRITE_ONLY                     0x88B9
+#define srGL_READ_WRITE                     0x88BA
+#define srGL_BUFFER_ACCESS                  0x88BB
+#define srGL_BUFFER_MAPPED                  0x88BC
+#define srGL_BUFFER_MAP_POINTER             0x88BD
+#define srGL_STREAM_DRAW                    0x88E0
+#define srGL_STREAM_READ                    0x88E1
+#define srGL_STREAM_COPY                    0x88E2
+#define srGL_STATIC_DRAW                    0x88E4
+#define srGL_STATIC_READ                    0x88E5
+#define srGL_STATIC_COPY                    0x88E6
+#define srGL_DYNAMIC_DRAW                   0x88E8
+#define srGL_DYNAMIC_READ                   0x88E9
+#define srGL_DYNAMIC_COPY                   0x88EA
+#define srGL_SAMPLES_PASSED                 0x8914
+#define srGL_SRC1_ALPHA                     0x8589
+#define srGL_VERTEX_ARRAY_BUFFER_BINDING    0x8896
+#define srGL_NORMAL_ARRAY_BUFFER_BINDING    0x8897
+#define srGL_COLOR_ARRAY_BUFFER_BINDING     0x8898
+#define srGL_INDEX_ARRAY_BUFFER_BINDING     0x8899
+#define srGL_TEXTURE_COORD_ARRAY_BUFFER_BINDING 0x889A
+#define srGL_EDGE_FLAG_ARRAY_BUFFER_BINDING 0x889B
+#define srGL_SECONDARY_COLOR_ARRAY_BUFFER_BINDING 0x889C
+#define srGL_FOG_COORDINATE_ARRAY_BUFFER_BINDING 0x889D
+#define srGL_WEIGHT_ARRAY_BUFFER_BINDING    0x889E
+#define srGL_FOG_COORD_SRC                  0x8450
+#define srGL_FOG_COORD                      0x8451
+#define srGL_CURRENT_FOG_COORD              0x8453
+#define srGL_FOG_COORD_ARRAY_TYPE           0x8454
+#define srGL_FOG_COORD_ARRAY_STRIDE         0x8455
+#define srGL_FOG_COORD_ARRAY_POINTER        0x8456
+#define srGL_FOG_COORD_ARRAY                0x8457
+#define srGL_FOG_COORD_ARRAY_BUFFER_BINDING 0x889D
+#define srGL_SRC0_RGB                       0x8580
+#define srGL_SRC1_RGB                       0x8581
+#define srGL_SRC2_RGB                       0x8582
+#define srGL_SRC0_ALPHA                     0x8588
+#define srGL_SRC2_ALPHA                     0x858A
+
+#ifdef SRGL_MOCK_GL
+    #define GL_BUFFER_SIZE                    srGL_BUFFER_SIZE
+    #define GL_BUFFER_USAGE                   srGL_BUFFER_USAGE
+    #define GL_QUERY_COUNTER_BITS             srGL_QUERY_COUNTER_BITS
+    #define GL_CURRENT_QUERY                  srGL_CURRENT_QUERY
+    #define GL_QUERY_RESULT                   srGL_QUERY_RESULT
+    #define GL_QUERY_RESULT_AVAILABLE         srGL_QUERY_RESULT_AVAILABLE
+    #define GL_ARRAY_BUFFER                   srGL_ARRAY_BUFFER
+    #define GL_ELEMENT_ARRAY_BUFFER           srGL_ELEMENT_ARRAY_BUFFER
+    #define GL_ARRAY_BUFFER_BINDING           srGL_ARRAY_BUFFER_BINDING
+    #define GL_ELEMENT_ARRAY_BUFFER_BINDING   srGL_ELEMENT_ARRAY_BUFFER_BINDING
+    #define GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING srGL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING
+    #define GL_READ_ONLY                      srGL_READ_ONLY
+    #define GL_WRITE_ONLY                     srGL_WRITE_ONLY
+    #define GL_READ_WRITE                     srGL_READ_WRITE
+    #define GL_BUFFER_ACCESS                  srGL_BUFFER_ACCESS
+    #define GL_BUFFER_MAPPED                  srGL_BUFFER_MAPPED
+    #define GL_BUFFER_MAP_POINTER             srGL_BUFFER_MAP_POINTER
+    #define GL_STREAM_DRAW                    srGL_STREAM_DRAW
+    #define GL_STREAM_READ                    srGL_STREAM_READ
+    #define GL_STREAM_COPY                    srGL_STREAM_COPY
+    #define GL_STATIC_DRAW                    srGL_STATIC_DRAW
+    #define GL_STATIC_READ                    srGL_STATIC_READ
+    #define GL_STATIC_COPY                    srGL_STATIC_COPY
+    #define GL_DYNAMIC_DRAW                   srGL_DYNAMIC_DRAW
+    #define GL_DYNAMIC_READ                   srGL_DYNAMIC_READ
+    #define GL_DYNAMIC_COPY                   srGL_DYNAMIC_COPY
+    #define GL_SAMPLES_PASSED                 srGL_SAMPLES_PASSED
+    #define GL_SRC1_ALPHA                     srGL_SRC1_ALPHA
+    #define GL_VERTEX_ARRAY_BUFFER_BINDING    srGL_VERTEX_ARRAY_BUFFER_BINDING
+    #define GL_NORMAL_ARRAY_BUFFER_BINDING    srGL_NORMAL_ARRAY_BUFFER_BINDING
+    #define GL_COLOR_ARRAY_BUFFER_BINDING     srGL_COLOR_ARRAY_BUFFER_BINDING
+    #define GL_INDEX_ARRAY_BUFFER_BINDING     srGL_INDEX_ARRAY_BUFFER_BINDING
+    #define GL_TEXTURE_COORD_ARRAY_BUFFER_BINDING srGL_TEXTURE_COORD_ARRAY_BUFFER_BINDING
+    #define GL_EDGE_FLAG_ARRAY_BUFFER_BINDING srGL_EDGE_FLAG_ARRAY_BUFFER_BINDING
+    #define GL_SECONDARY_COLOR_ARRAY_BUFFER_BINDING srGL_SECONDARY_COLOR_ARRAY_BUFFER_BINDING
+    #define GL_FOG_COORDINATE_ARRAY_BUFFER_BINDING srGL_FOG_COORDINATE_ARRAY_BUFFER_BINDING
+    #define GL_WEIGHT_ARRAY_BUFFER_BINDING    srGL_WEIGHT_ARRAY_BUFFER_BINDING
+    #define GL_FOG_COORD_SRC                  srGL_FOG_COORD_SRC
+    #define GL_FOG_COORD                      srGL_FOG_COORD
+    #define GL_CURRENT_FOG_COORD              srGL_CURRENT_FOG_COORD
+    #define GL_FOG_COORD_ARRAY_TYPE           srGL_FOG_COORD_ARRAY_TYPE
+    #define GL_FOG_COORD_ARRAY_STRIDE         srGL_FOG_COORD_ARRAY_STRIDE
+    #define GL_FOG_COORD_ARRAY_POINTER        srGL_FOG_COORD_ARRAY_POINTER
+    #define GL_FOG_COORD_ARRAY                srGL_FOG_COORD_ARRAY
+    #define GL_FOG_COORD_ARRAY_BUFFER_BINDING srGL_FOG_COORD_ARRAY_BUFFER_BINDING
+    #define GL_SRC0_RGB                       srGL_SRC0_RGB
+    #define GL_SRC1_RGB                       srGL_SRC1_RGB
+    #define GL_SRC2_RGB                       srGL_SRC2_RGB
+    #define GL_SRC0_ALPHA                     srGL_SRC0_ALPHA
+    #define GL_SRC2_ALPHA                     srGL_SRC2_ALPHA
+#endif
+
+// 2.0
+typedef char GLchar;
+#define srGL_BLEND_EQUATION_RGB             0x8009
+#define srGL_VERTEX_ATTRIB_ARRAY_ENABLED    0x8622
+#define srGL_VERTEX_ATTRIB_ARRAY_SIZE       0x8623
+#define srGL_VERTEX_ATTRIB_ARRAY_STRIDE     0x8624
+#define srGL_VERTEX_ATTRIB_ARRAY_TYPE       0x8625
+#define srGL_CURRENT_VERTEX_ATTRIB          0x8626
+#define srGL_VERTEX_PROGRAM_POINT_SIZE      0x8642
+#define srGL_VERTEX_ATTRIB_ARRAY_POINTER    0x8645
+#define srGL_STENCIL_BACK_FUNC              0x8800
+#define srGL_STENCIL_BACK_FAIL              0x8801
+#define srGL_STENCIL_BACK_PASS_DEPTH_FAIL   0x8802
+#define srGL_STENCIL_BACK_PASS_DEPTH_PASS   0x8803
+#define srGL_MAX_DRAW_BUFFERS               0x8824
+#define srGL_DRAW_BUFFER0                   0x8825
+#define srGL_DRAW_BUFFER1                   0x8826
+#define srGL_DRAW_BUFFER2                   0x8827
+#define srGL_DRAW_BUFFER3                   0x8828
+#define srGL_DRAW_BUFFER4                   0x8829
+#define srGL_DRAW_BUFFER5                   0x882A
+#define srGL_DRAW_BUFFER6                   0x882B
+#define srGL_DRAW_BUFFER7                   0x882C
+#define srGL_DRAW_BUFFER8                   0x882D
+#define srGL_DRAW_BUFFER9                   0x882E
+#define srGL_DRAW_BUFFER10                  0x882F
+#define srGL_DRAW_BUFFER11                  0x8830
+#define srGL_DRAW_BUFFER12                  0x8831
+#define srGL_DRAW_BUFFER13                  0x8832
+#define srGL_DRAW_BUFFER14                  0x8833
+#define srGL_DRAW_BUFFER15                  0x8834
+#define srGL_BLEND_EQUATION_ALPHA           0x883D
+#define srGL_MAX_VERTEX_ATTRIBS             0x8869
+#define srGL_VERTEX_ATTRIB_ARRAY_NORMALIZED 0x886A
+#define srGL_MAX_TEXTURE_IMAGE_UNITS        0x8872
+#define srGL_FRAGMENT_SHADER                0x8B30
+#define srGL_VERTEX_SHADER                  0x8B31
+#define srGL_MAX_FRAGMENT_UNIFORM_COMPONENTS 0x8B49
+#define srGL_MAX_VERTEX_UNIFORM_COMPONENTS  0x8B4A
+#define srGL_MAX_VARYING_FLOATS             0x8B4B
+#define srGL_MAX_VERTEX_TEXTURE_IMAGE_UNITS 0x8B4C
+#define srGL_MAX_COMBINED_TEXTURE_IMAGE_UNITS 0x8B4D
+#define srGL_SHADER_TYPE                    0x8B4F
+#define srGL_FLOAT_VEC2                     0x8B50
+#define srGL_FLOAT_VEC3                     0x8B51
+#define srGL_FLOAT_VEC4                     0x8B52
+#define srGL_INT_VEC2                       0x8B53
+#define srGL_INT_VEC3                       0x8B54
+#define srGL_INT_VEC4                       0x8B55
+#define srGL_BOOL                           0x8B56
+#define srGL_BOOL_VEC2                      0x8B57
+#define srGL_BOOL_VEC3                      0x8B58
+#define srGL_BOOL_VEC4                      0x8B59
+#define srGL_FLOAT_MAT2                     0x8B5A
+#define srGL_FLOAT_MAT3                     0x8B5B
+#define srGL_FLOAT_MAT4                     0x8B5C
+#define srGL_SAMPLER_1D                     0x8B5D
+#define srGL_SAMPLER_2D                     0x8B5E
+#define srGL_SAMPLER_3D                     0x8B5F
+#define srGL_SAMPLER_CUBE                   0x8B60
+#define srGL_SAMPLER_1D_SHADOW              0x8B61
+#define srGL_SAMPLER_2D_SHADOW              0x8B62
+#define srGL_DELETE_STATUS                  0x8B80
+#define srGL_COMPILE_STATUS                 0x8B81
+#define srGL_LINK_STATUS                    0x8B82
+#define srGL_VALIDATE_STATUS                0x8B83
+#define srGL_INFO_LOG_LENGTH                0x8B84
+#define srGL_ATTACHED_SHADERS               0x8B85
+#define srGL_ACTIVE_UNIFORMS                0x8B86
+#define srGL_ACTIVE_UNIFORM_MAX_LENGTH      0x8B87
+#define srGL_SHADER_SOURCE_LENGTH           0x8B88
+#define srGL_ACTIVE_ATTRIBUTES              0x8B89
+#define srGL_ACTIVE_ATTRIBUTE_MAX_LENGTH    0x8B8A
+#define srGL_FRAGMENT_SHADER_DERIVATIVE_HINT 0x8B8B
+#define srGL_SHADING_LANGUAGE_VERSION       0x8B8C
+#define srGL_CURRENT_PROGRAM                0x8B8D
+#define srGL_POINT_SPRITE_COORD_ORIGIN      0x8CA0
+#define srGL_LOWER_LEFT                     0x8CA1
+#define srGL_UPPER_LEFT                     0x8CA2
+#define srGL_STENCIL_BACK_REF               0x8CA3
+#define srGL_STENCIL_BACK_VALUE_MASK        0x8CA4
+#define srGL_STENCIL_BACK_WRITEMASK         0x8CA5
+#define srGL_VERTEX_PROGRAM_TWO_SIDE        0x8643
+#define srGL_POINT_SPRITE                   0x8861
+#define srGL_COORD_REPLACE                  0x8862
+#define srGL_MAX_TEXTURE_COORDS             0x8871
+
+#ifdef SRGL_MOCK_GL
+    #define GL_BLEND_EQUATION_RGB             srGL_BLEND_EQUATION_RGB
+    #define GL_VERTEX_ATTRIB_ARRAY_ENABLED    srGL_VERTEX_ATTRIB_ARRAY_ENABLED
+    #define GL_VERTEX_ATTRIB_ARRAY_SIZE       srGL_VERTEX_ATTRIB_ARRAY_SIZE
+    #define GL_VERTEX_ATTRIB_ARRAY_STRIDE     srGL_VERTEX_ATTRIB_ARRAY_STRIDE
+    #define GL_VERTEX_ATTRIB_ARRAY_TYPE       srGL_VERTEX_ATTRIB_ARRAY_TYPE
+    #define GL_CURRENT_VERTEX_ATTRIB          srGL_CURRENT_VERTEX_ATTRIB
+    #define GL_VERTEX_PROGRAM_POINT_SIZE      srGL_VERTEX_PROGRAM_POINT_SIZE
+    #define GL_VERTEX_ATTRIB_ARRAY_POINTER    srGL_VERTEX_ATTRIB_ARRAY_POINTER
+    #define GL_STENCIL_BACK_FUNC              srGL_STENCIL_BACK_FUNC
+    #define GL_STENCIL_BACK_FAIL              srGL_STENCIL_BACK_FAIL
+    #define GL_STENCIL_BACK_PASS_DEPTH_FAIL   srGL_STENCIL_BACK_PASS_DEPTH_FAIL
+    #define GL_STENCIL_BACK_PASS_DEPTH_PASS   srGL_STENCIL_BACK_PASS_DEPTH_PASS
+    #define GL_MAX_DRAW_BUFFERS               srGL_MAX_DRAW_BUFFERS
+    #define GL_DRAW_BUFFER0                   srGL_DRAW_BUFFER0
+    #define GL_DRAW_BUFFER1                   srGL_DRAW_BUFFER1
+    #define GL_DRAW_BUFFER2                   srGL_DRAW_BUFFER2
+    #define GL_DRAW_BUFFER3                   srGL_DRAW_BUFFER3
+    #define GL_DRAW_BUFFER4                   srGL_DRAW_BUFFER4
+    #define GL_DRAW_BUFFER5                   srGL_DRAW_BUFFER5
+    #define GL_DRAW_BUFFER6                   srGL_DRAW_BUFFER6
+    #define GL_DRAW_BUFFER7                   srGL_DRAW_BUFFER7
+    #define GL_DRAW_BUFFER8                   srGL_DRAW_BUFFER8
+    #define GL_DRAW_BUFFER9                   srGL_DRAW_BUFFER9
+    #define GL_DRAW_BUFFER10                  srGL_DRAW_BUFFER10
+    #define GL_DRAW_BUFFER11                  srGL_DRAW_BUFFER11
+    #define GL_DRAW_BUFFER12                  srGL_DRAW_BUFFER12
+    #define GL_DRAW_BUFFER13                  srGL_DRAW_BUFFER13
+    #define GL_DRAW_BUFFER14                  srGL_DRAW_BUFFER14
+    #define GL_DRAW_BUFFER15                  srGL_DRAW_BUFFER15
+    #define GL_BLEND_EQUATION_ALPHA           srGL_BLEND_EQUATION_ALPHA
+    #define GL_MAX_VERTEX_ATTRIBS             srGL_MAX_VERTEX_ATTRIBS
+    #define GL_VERTEX_ATTRIB_ARRAY_NORMALIZED srGL_VERTEX_ATTRIB_ARRAY_NORMALIZED
+    #define GL_MAX_TEXTURE_IMAGE_UNITS        srGL_MAX_TEXTURE_IMAGE_UNITS
+    #define GL_FRAGMENT_SHADER                srGL_FRAGMENT_SHADER
+    #define GL_VERTEX_SHADER                  srGL_VERTEX_SHADER
+    #define GL_MAX_FRAGMENT_UNIFORM_COMPONENTS srGL_MAX_FRAGMENT_UNIFORM_COMPONENTS
+    #define GL_MAX_VERTEX_UNIFORM_COMPONENTS  srGL_MAX_VERTEX_UNIFORM_COMPONENTS
+    #define GL_MAX_VARYING_FLOATS             srGL_MAX_VARYING_FLOATS
+    #define GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS srGL_MAX_VERTEX_TEXTURE_IMAGE_UNITS
+    #define GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS srGL_MAX_COMBINED_TEXTURE_IMAGE_UNITS
+    #define GL_SHADER_TYPE                    srGL_SHADER_TYPE
+    #define GL_FLOAT_VEC2                     srGL_FLOAT_VEC2
+    #define GL_FLOAT_VEC3                     srGL_FLOAT_VEC3
+    #define GL_FLOAT_VEC4                     srGL_FLOAT_VEC4
+    #define GL_INT_VEC2                       srGL_INT_VEC2
+    #define GL_INT_VEC3                       srGL_INT_VEC3
+    #define GL_INT_VEC4                       srGL_INT_VEC4
+    #define GL_BOOL                           srGL_BOOL
+    #define GL_BOOL_VEC2                      srGL_BOOL_VEC2
+    #define GL_BOOL_VEC3                      srGL_BOOL_VEC3
+    #define GL_BOOL_VEC4                      srGL_BOOL_VEC4
+    #define GL_FLOAT_MAT2                     srGL_FLOAT_MAT2
+    #define GL_FLOAT_MAT3                     srGL_FLOAT_MAT3
+    #define GL_FLOAT_MAT4                     srGL_FLOAT_MAT4
+    #define GL_SAMPLER_1D                     srGL_SAMPLER_1D
+    #define GL_SAMPLER_2D                     srGL_SAMPLER_2D
+    #define GL_SAMPLER_3D                     srGL_SAMPLER_3D
+    #define GL_SAMPLER_CUBE                   srGL_SAMPLER_CUBE
+    #define GL_SAMPLER_1D_SHADOW              srGL_SAMPLER_1D_SHADOW
+    #define GL_SAMPLER_2D_SHADOW              srGL_SAMPLER_2D_SHADOW
+    #define GL_DELETE_STATUS                  srGL_DELETE_STATUS
+    #define GL_COMPILE_STATUS                 srGL_COMPILE_STATUS
+    #define GL_LINK_STATUS                    srGL_LINK_STATUS
+    #define GL_VALIDATE_STATUS                srGL_VALIDATE_STATUS
+    #define GL_INFO_LOG_LENGTH                srGL_INFO_LOG_LENGTH
+    #define GL_ATTACHED_SHADERS               srGL_ATTACHED_SHADERS
+    #define GL_ACTIVE_UNIFORMS                srGL_ACTIVE_UNIFORMS
+    #define GL_ACTIVE_UNIFORM_MAX_LENGTH      srGL_ACTIVE_UNIFORM_MAX_LENGTH
+    #define GL_SHADER_SOURCE_LENGTH           srGL_SHADER_SOURCE_LENGTH
+    #define GL_ACTIVE_ATTRIBUTES              srGL_ACTIVE_ATTRIBUTES
+    #define GL_ACTIVE_ATTRIBUTE_MAX_LENGTH    srGL_ACTIVE_ATTRIBUTE_MAX_LENGTH
+    #define GL_FRAGMENT_SHADER_DERIVATIVE_HINT srGL_FRAGMENT_SHADER_DERIVATIVE_HINT
+    #define GL_SHADING_LANGUAGE_VERSION       srGL_SHADING_LANGUAGE_VERSION
+    #define GL_CURRENT_PROGRAM                srGL_CURRENT_PROGRAM
+    #define GL_POINT_SPRITE_COORD_ORIGIN      srGL_POINT_SPRITE_COORD_ORIGIN
+    #define GL_LOWER_LEFT                     srGL_LOWER_LEFT
+    #define GL_UPPER_LEFT                     srGL_UPPER_LEFT
+    #define GL_STENCIL_BACK_REF               srGL_STENCIL_BACK_REF
+    #define GL_STENCIL_BACK_VALUE_MASK        srGL_STENCIL_BACK_VALUE_MASK
+    #define GL_STENCIL_BACK_WRITEMASK         srGL_STENCIL_BACK_WRITEMASK
+    #define GL_VERTEX_PROGRAM_TWO_SIDE        srGL_VERTEX_PROGRAM_TWO_SIDE
+    #define GL_POINT_SPRITE                   srGL_POINT_SPRITE
+    #define GL_COORD_REPLACE                  srGL_COORD_REPLACE
+    #define GL_MAX_TEXTURE_COORDS             srGL_MAX_TEXTURE_COORDS
+#endif
