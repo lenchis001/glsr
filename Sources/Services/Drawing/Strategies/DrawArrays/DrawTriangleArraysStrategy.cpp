@@ -40,7 +40,7 @@ std::vector<Fragment> DrawTriangleArraysStrategy::processVertices()
     auto inputs = _collectVertexShaderInputs();
     // Run the vertex shader for each input
     auto vertexShaderOutputs = _runVertexShader(inputs);
-    
+
     // Convert vertex shader outputs to view space triangles
     auto viewTriangles = _toViewTriangles(vertexShaderOutputs);
 
@@ -50,7 +50,7 @@ std::vector<Fragment> DrawTriangleArraysStrategy::processVertices()
     return _rasterize(cullFaceEnabled ? _cullFaceTest(viewTriangles) : viewTriangles);
 }
 
-std::map<Point<srGLsizei>, Vector4d<srGLfloat>> DrawTriangleArraysStrategy::processFragments(const std::vector<Fragment>& fragments)
+std::map<Point<srGLsizei>, Vector4d<srGLfloat>> DrawTriangleArraysStrategy::processFragments(const std::vector<Fragment> &fragments)
 {
     std::map<Point<srGLsizei>, Vector4d<srGLfloat>> fragmentOutputs;
 
@@ -96,7 +96,7 @@ std::vector<ViewTriangle<srGLsizei>> DrawTriangleArraysStrategy::_toViewTriangle
     std::vector<ViewTriangle<srGLsizei>> triangles;
 
     assert(vertexShaderOutputs.size() % 3 == 0 && "Vertex shader outputs should be a multiple of 3 for triangles");
-    
+
     // Every three vertex shader outputs form a triangle
     for (size_t i = 0; i + 2 < vertexShaderOutputs.size(); i += 3)
     {
@@ -118,7 +118,7 @@ std::vector<ViewTriangle<srGLsizei>> DrawTriangleArraysStrategy::_toViewTriangle
                 const auto &vertexOutputs = clippedTriangle[v];
 
                 auto glPosition = std::find_if(vertexOutputs.begin(), vertexOutputs.end(), [](const auto &outputValue)
-                                                { return outputValue.name == GL_POSITION_NAME; });
+                                               { return outputValue.name == GL_POSITION_NAME; });
                 assert(glPosition != vertexOutputs.end());
 
                 auto clipW = glPosition->value.floatVector4dValue.w;
@@ -150,6 +150,26 @@ std::vector<ViewTriangle<srGLsizei>> DrawTriangleArraysStrategy::_toViewTriangle
     return triangles;
 }
 
+// Connecting p to each vertex splits the triangle into exactly three
+// sub-triangles (not four) - one per edge of the outer triangle:
+//
+//                     v0
+//                     /*\
+//                    / * \
+//                   /  *  \
+//                  /   p   \
+//                 /  *   *  \
+//                / *       * \
+//               /*           *\
+//              v1--------------v2
+//
+// * v10pS2 = triangle (p, v0, v1), area opposite v2 -> w2
+// * v20pS2 = triangle (p, v2, v0), area opposite v1 -> w1
+// * v12pS2 = triangle (p, v1, v2), area opposite v0 -> w0
+//
+// Each *pS2 numerator is twice the signed area of the sub-triangle formed by p
+// and the edge opposite the named vertex; dividing by denom (twice the whole
+// triangle's area) yields that vertex's barycentric weight.
 std::vector<Fragment> DrawTriangleArraysStrategy::_rasterizeTriangle(const ViewTriangle<srGLsizei> &vertexShaderTriangle)
 {
     const auto &v0 = vertexShaderTriangle.points[0];
@@ -173,36 +193,25 @@ std::vector<Fragment> DrawTriangleArraysStrategy::_rasterizeTriangle(const ViewT
         return {};
     }
 
-    // Barycentric numerators (a * denom, b * denom) are linear functions of x and y,
-    // so instead of recomputing them from scratch for every pixel we step them
-    // incrementally: a fixed delta per column and a fixed delta per row.
-    int64_t aStepX = v1.y - v2.y;
-    int64_t aStepY = v2.x - v1.x;
-    int64_t bStepX = v2.y - v0.y;
-    int64_t bStepY = v0.x - v2.x;
-
-    int64_t aRowStart = aStepX * (minX - v2.x) + aStepY * (minY - v2.y);
-    int64_t bRowStart = bStepX * (minX - v2.x) + bStepY * (minY - v2.y);
-
     bool positiveDenom = denom > 0;
 
-    for (srGLsizei y = minY; y <= maxY; ++y)
+    for (srGLsizei x = minX; x <= maxX; ++x)
     {
-        int64_t aNumerator = aRowStart;
-        int64_t bNumerator = bRowStart;
-
-        for (srGLsizei x = minX; x <= maxX; ++x)
+        for (srGLsizei y = minY; y <= maxY; ++y)
         {
-            int64_t cNumerator = denom - aNumerator - bNumerator;
+            // Barycentric numerators recomputed from scratch for every pixel.
+            int64_t v12pS2 = static_cast<int64_t>(v1.y - v2.y) * (x - v2.x) + static_cast<int64_t>(v2.x - v1.x) * (y - v2.y);
+            int64_t v20pS2 = static_cast<int64_t>(v2.y - v0.y) * (x - v2.x) + static_cast<int64_t>(v0.x - v2.x) * (y - v2.y);
+            int64_t v10pS2 = denom - v12pS2 - v20pS2;
 
             bool inside = positiveDenom
-                              ? (aNumerator >= 0 && bNumerator >= 0 && cNumerator >= 0)
-                              : (aNumerator <= 0 && bNumerator <= 0 && cNumerator <= 0);
+                              ? (v12pS2 >= 0 && v20pS2 >= 0 && v10pS2 >= 0)
+                              : (v12pS2 <= 0 && v20pS2 <= 0 && v10pS2 <= 0);
 
             if (inside)
             {
-                float w0 = static_cast<float>(aNumerator) / static_cast<float>(denom);
-                float w1 = static_cast<float>(bNumerator) / static_cast<float>(denom);
+                float w0 = static_cast<float>(v12pS2) / static_cast<float>(denom);
+                float w1 = static_cast<float>(v20pS2) / static_cast<float>(denom);
                 float w2 = 1.0f - w0 - w1;
 
                 auto interpolatedDepth =
@@ -233,13 +242,7 @@ std::vector<Fragment> DrawTriangleArraysStrategy::_rasterizeTriangle(const ViewT
                         interpolatedDepth,
                         interpolatedOutputs));
             }
-
-            aNumerator += aStepX;
-            bNumerator += bStepX;
         }
-
-        aRowStart += aStepY;
-        bRowStart += bStepY;
     }
 
     return insideTrianglePoints;

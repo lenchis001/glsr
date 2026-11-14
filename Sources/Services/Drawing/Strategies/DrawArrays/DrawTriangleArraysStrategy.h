@@ -48,7 +48,7 @@ namespace glsr::Services::Drawing::Strategies::DrawArrays
 
         std::vector<Fragment> processVertices() override;
 
-        std::map<Drawing::Models::Point<srGLsizei>, glsr::Models::Vector4d<srGLfloat>> processFragments(const std::vector<Fragment>& fragments) override;
+        std::map<Drawing::Models::Point<srGLsizei>, glsr::Models::Vector4d<srGLfloat>> processFragments(const std::vector<Fragment> &fragments) override;
 
     protected:
         virtual std::vector<std::vector<InputValue>> _collectVertexShaderInputs();
@@ -56,7 +56,7 @@ namespace glsr::Services::Drawing::Strategies::DrawArrays
     private:
         std::vector<Fragment> _rasterize(const std::vector<ViewTriangle<srGLsizei>> &viewTriangles);
         std::vector<ViewTriangle<srGLsizei>> _toViewTriangles(const std::vector<std::vector<OutputValue>> &vertexShaderOutputs);
-        
+
         std::vector<Fragment> _rasterizeTriangle(const ViewTriangle<srGLsizei> &vertexShaderTriangle);
         std::vector<InputValue> _interpolateOutputs(
             const std::array<std::vector<OutputValue>, 3> &vertexShaderCustomOutputs,
